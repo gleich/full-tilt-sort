@@ -13,15 +13,12 @@ pub struct File {
 /// Get all the file paths and their modification times
 pub fn get_files() -> std::io::Result<Vec<File>> {
     let mut files: Vec<File> = Vec::new();
-    let cwd = env::current_dir().expect("Failed to obtain current working directory");
+    let cwd = env::current_dir()?;
     for entry in WalkDir::new(cwd).follow_links(true) {
-        let clean_entry = entry.expect("Failed to read from file system object");
-        let path = clean_entry.into_path();
+        let path = entry?.into_path();
         let meta = fs::metadata(&path).unwrap();
         if meta.is_file() {
-            let mod_time = meta
-                .modified()
-                .expect("Failed to get file modification time");
+            let mod_time = meta.modified()?;
             files.push(File { path, mod_time })
         }
     }
