@@ -1,8 +1,8 @@
 FROM rust:1.50.0-alpine AS builder
 
 # Meta data
-LABEL maintainer="project_author_email"
-LABEL description="project_description"
+LABEL maintainer="email@mattglei.ch"
+LABEL description="🚀 Really fast file sorting CLI"
 
 # Copying over all the files
 COPY . /usr/src/app
@@ -18,5 +18,5 @@ RUN make build-prod
 
 # hadolint ignore=DL3006,DL3007
 FROM alpine:latest
-COPY --from=builder /usr/src/app/target/release/project_name .
-CMD ["./project_name"]
+COPY --from=builder /usr/src/app/target/release/full-tilt-sort .
+CMD ["./full-tilt-sort"]

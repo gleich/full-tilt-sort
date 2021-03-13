@@ -12,10 +12,10 @@ build-dev:
 	cargo build
 
 build-docker-prod:
-	docker build -f docker/prod.Dockerfile -t docker_username/project_name:latest .
+	docker build -f docker/prod.Dockerfile -t mattgleich/full-tilt-sort:latest .
 
 build-docker-dev:
-	docker build -f docker/dev.Dockerfile -t docker_username/project_name:dev .
+	docker build -f docker/dev.Dockerfile -t mattgleich/full-tilt-sort:dev .
 
 ########
 # Lint #
