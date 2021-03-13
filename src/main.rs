@@ -1,3 +1,5 @@
+mod structure;
+
 fn main() {
-    println!("Hello, world!");
+    structure::get_files().expect("Failed to get files in structure");
 }
