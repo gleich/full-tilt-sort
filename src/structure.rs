@@ -6,18 +6,22 @@ use walkdir::WalkDir;
 
 /// A file in the structure
 pub struct File {
-	path: PathBuf,
-	mod_time: DateTime<Local>,
+	pub path: PathBuf,
+	pub mod_time: DateTime<Local>,
 }
 
 impl File {
+	/// Append the new folder path to the file name
+	/// The new path is in the following pattern according to the modification date:
+	/// Month/Day of the Week - Date/File Name
+	/// An example of this would be March/Monday - 15/main.rs
 	pub fn new_path(&self) -> PathBuf {
-		// Generating parts
-		let file_name = self.path.file_name().unwrap().to_str().unwrap();
-		let parent = DateTime::format(&self.mod_time, "%B/%A - %e");
-
-		// Put parts together
-		Path::new(&format!("{}/{}", parent, file_name)).to_path_buf()
+		let path = format!(
+			"{}/{}",
+			DateTime::format(&self.mod_time, "%B/%A - %e").to_string(),
+			&self.path.file_name().unwrap().to_str().unwrap()
+		);
+		Path::new(&path).to_path_buf()
 	}
 }
 
