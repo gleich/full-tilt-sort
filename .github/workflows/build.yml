@@ -6,17 +6,18 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  cargo:
+  rust:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
-      - run: cargo check
+      - uses: davidB/rust-cargo-make@v1
+      - run: cargo make build-rust
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-      - run: make build-docker-prod
+      - uses: actions/checkout@v2
+      - uses: davidB/rust-cargo-make@v1
+      - run: cargo make build-docker

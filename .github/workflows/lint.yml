@@ -8,7 +8,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  rustfmt:
+  rust:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,7 +17,8 @@ jobs:
           toolchain: nightly
           components: rustfmt
           override: true
-      - run: make lint-rust
+      - uses: davidB/rust-cargo-make@v1
+      - run: cargo make lint-rust
   hadolint:
     runs-on: ubuntu-latest
     steps:

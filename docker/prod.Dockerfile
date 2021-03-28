@@ -1,4 +1,5 @@
-FROM rust:1.50.0-alpine AS builder
+# hadolint ignore=DL3007
+FROM rust:latest AS builder
 
 # Meta data
 LABEL maintainer="email@mattglei.ch"
@@ -8,15 +9,12 @@ LABEL description="🚀 Really fast file sorting CLI"
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-# Install make
-# hadolint ignore=DL3018
-RUN apk add --no-cache --update make
-RUN rm -rf /var/cache/apk/*
-
 # Build binary
-RUN make build-prod
+RUN cargo install --force cargo-make
+RUN cargo make build-rust-prod
 
 # hadolint ignore=DL3006,DL3007
 FROM alpine:latest
+WORKDIR /
 COPY --from=builder /usr/src/app/target/release/full-tilt-sort .
 CMD ["./full-tilt-sort"]
