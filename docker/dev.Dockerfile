@@ -5,14 +5,15 @@ FROM rust:latest AS builder
 LABEL maintainer="email@mattglei.ch"
 LABEL description="🚀 Really fast file sorting CLI"
 
-# Copying over all the files
+# File copy
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-# Build binary
+# Binary build
 RUN cargo install --force cargo-make
 RUN cargo make build-rust-dev
 
+# Copy of binary to smaller image
 # hadolint ignore=DL3006,DL3007
 FROM alpine:latest
 WORKDIR /

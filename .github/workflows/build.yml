@@ -27,6 +27,6 @@ jobs:
         with:
           filters: |
             docker:
-              - '*.Dockerfile'
-      - if: steps.changes.outputs.src == 'true'
+              - '**.Dockerfile'
+      - if: steps.changes.outputs.docker == 'true'
         run: cargo make build-docker
