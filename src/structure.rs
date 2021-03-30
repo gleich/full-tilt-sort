@@ -19,7 +19,12 @@ impl File {
 		let path = format!(
 			"{}/{}",
 			DateTime::format(&self.mod_time, "%B/%A - %e").to_string(),
-			&self.path.file_name().unwrap().to_str().unwrap()
+			&self
+				.path
+				.file_name()
+				.expect("Failed to get file name")
+				.to_str()
+				.unwrap()
 		);
 		Path::new(&path).to_path_buf()
 	}
